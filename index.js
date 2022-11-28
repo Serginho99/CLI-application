@@ -23,34 +23,54 @@ const argv = program.opts();
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      const list = await getContacts();
-      console.table(list);
+      try {
+        const list = await getContacts();
+        console.table(list);
+      } catch (error) {
+        console.log(error.message);
+      }
       break;
 
     case "get":
-      const contactById = await getContactById(id);
-      if (!contactById) {
-        throw new Error(`Contact with id:${id} not found`);
+      try {
+        const contactById = await getContactById(id);
+        if (!contactById) {
+          throw new Error(`Contact with id:${id} not found`);
+        }
+        console.table(contactById);
+      } catch (error) {
+        console.log(error.message);
       }
-      console.table(contactById);
       break;
 
     case "remove":
-      const removeById = await removeContact(id);
-      console.table(removeById);
+      try {
+        const removeById = await removeContact(id);
+        console.table(removeById);
+      } catch (error) {
+        console.log(error.message);
+      }
       break;
 
     case "add":
-      const newContact = await addContact(name, email, phone);
-      console.table(newContact);
+      try {
+        const newContact = await addContact(name, email, phone);
+        console.table(newContact);
+      } catch (error) {
+        console.log(error.message);
+      }
       break;
 
     case "update":
-      const updateById = await updateContactById(id, name, email, phone);
-      if (!updateById) {
-        throw new Error(`Contact with id:${id} not found`);
+      try {
+        const updateById = await updateContactById(id, name, email, phone);
+        if (!updateById) {
+          throw new Error(`Contact with id:${id} not found`);
+        }
+        console.table(updateById);
+      } catch (error) {
+        console.log(error.message);
       }
-      console.table(updateById);
       break;
 
     default:
